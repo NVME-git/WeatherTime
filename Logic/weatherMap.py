@@ -1,3 +1,4 @@
+import sys
 import json
 import requests
 
@@ -13,7 +14,7 @@ def weatherMap(cityName, units='standard'):
 
     if response.status_code == 200:
         data = response.json()
-        payload['Country'] = data['sys']['country']
+        payload['CountryCode'] = data['sys']['country']
         payload['City'] = data['name']
         payload['CityTimeZone'] = int(data['timezone']/60) 
         payload['CurrentTemperature'] = data['main']['temp']
@@ -21,5 +22,6 @@ def weatherMap(cityName, units='standard'):
     return payload
 
 if __name__ == '__main__':
-    response = weatherMap('Redmond')
-    print(json.dumps(response, indent=4, sort_keys=True))
+    if len(sys.argv) > 1:
+        response = weatherMap(sys.argv[1])
+        print(json.dumps(response, indent=4, sort_keys=True))

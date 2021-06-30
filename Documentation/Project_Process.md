@@ -33,6 +33,7 @@ The problem will be broken down into three parts:
 * Time difference units
 * Country vs City APIs
 * Bad request handling
+    * Consistent schema returned for both good and bad requests.
 * API Key usage management
     * access
     * monitoring

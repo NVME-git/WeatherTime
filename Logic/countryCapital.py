@@ -1,3 +1,4 @@
+import sys
 import json
 import requests
 
@@ -11,14 +12,17 @@ def countryCapital(countryName):
     response = requests.get(url = URL)
 
     payload = {
-        'statusCode': response.status_code,
-        'reason': response.reason}
+        'statusCode': response.status_code}
 
     if response.status_code == 200:
+        payload['reason'] = 'OK'
         payload['Capital'], payload['CountryCode'] = firstValidValue(response)
+    else:
+        payload['reason'] = 'Not Found'
 
     return payload
 
 if __name__ == '__main__':
-    response = countryCapital('United States')
-    print(json.dumps(response, indent=4, sort_keys=True))
+    if len(sys.argv) > 1:
+        response = countryCapital(sys.argv[1])
+        print(json.dumps(response, indent=4, sort_keys=True))
