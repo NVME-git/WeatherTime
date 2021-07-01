@@ -1,7 +1,7 @@
 import unittest
-from logic import *
+from lambdaFunction import *
 
-class TestLogic(unittest.TestCase):
+class TestLambdaFunction(unittest.TestCase):
     """
     Tests for the lambda function
     """
@@ -11,29 +11,24 @@ class TestLogic(unittest.TestCase):
         Check the expected values for known countries and cities
         """
         request = {
-            'Country':'South Africa',
-            'UserTimeZone': 120
+            'body': '{\r\n    "Country":"South Africa",\r\n    "UserTimeZone": 120\r\n}'
         }
-        result = lambda_handler(request,'')
+        result = main(request,'')
+        result = json.loads(result['body'])
         result.pop('Temperature', None)
         expected = {
-            'statusCode':200,
-            'reason':'OK',
             'City':'Pretoria',
             'CountryCode':'ZA',
-            'TimeDifference':0
-            }
+            'TimeDifference':0}
         self.assertEqual(result, expected)
 
         request = {
-            'City':'Johannesburg',
-            'UserTimeZone': 0
+            'body': '{\r\n    "City":"Johannesburg",\r\n    "UserTimeZone": 0\r\n}'
         }
-        result = lambda_handler(request,'')
+        result = main(request,'')
+        result = json.loads(result['body'])
         result.pop('Temperature', None)
         expected = {
-            'statusCode':200,
-            'reason':'OK',
             'City':'Johannesburg',
             'CountryCode':'ZA',
             'TimeDifference':-120
@@ -46,27 +41,21 @@ class TestLogic(unittest.TestCase):
         """
         # Invalid Country
         request = {
-            'Country':'ABCDEF',
-            'UserTimeZone': 300
+            'body': '{\r\n    "Country":"ABCDEF",\r\n    "UserTimeZone": 120\r\n}'
         }
-        result = lambda_handler(request,'')
-        expected = {
-            'statusCode':404,
-            'reason':'Not Found'
-        }
-        self.assertEqual(result, expected)
+        result = main(request,'')
+        self.assertEqual(result['statusCode'], 404)
 
         # Invalid City
         request = {
-            'City':'ABCDEF',
-            'UserTimeZone': 300
+            'body': '{\r\n    "City":"ABCDEF",\r\n    "UserTimeZone": 0\r\n}'
         }
-        result = lambda_handler(request,'')
+        result = main(request,'')
         expected = {
             'statusCode':404,
             'reason':'Not Found'
         }
-        self.assertEqual(result, expected)
+        self.assertEqual(result['statusCode'], 404)
 
 
 if __name__ == '__main__':
