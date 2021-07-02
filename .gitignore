@@ -114,3 +114,8 @@ dmypy.json
 # Pyre type checker
 .pyre/
 lambda-deployment-package.zip
+Infrastructure/.terraform.lock.hcl
+Infrastructure/.terraform/providers/registry.terraform.io/hashicorp/aws/3.47.0/linux_amd64/terraform-provider-aws_v3.47.0_x5
+Infrastructure/AWS_credentials
+Infrastructure/terraform.tfstate
+Infrastructure/terraform.tfstate.backup
