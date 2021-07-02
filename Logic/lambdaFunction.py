@@ -20,12 +20,16 @@ def main(event, context):
     weather = weatherMap(city, units)
     
     UserTimeZone = timeZone(event['UserTimeZone'])
-
-    return {
+    
+    response = {
         'City': weather['City'],
         'CountryCode': weather['CountryCode'],
         'Temperature': weather['CurrentTemperature'],
         'TimeDifference' : int(UserTimeZone - weather['CityTimeZone']/60)}
+    
+    print(response)
+
+    return response
 
 
 if __name__ == '__main__':
