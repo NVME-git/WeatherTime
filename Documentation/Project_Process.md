@@ -21,7 +21,7 @@ The problem will be broken down into three parts:
         * Cities east of the GMT line have 
 1. Time Delta function: Get time difference between the timezone of the person calling the API and the city they search for.
 
-## Performance aspects that are considered:
+## Performance aspects that are considered
 
 * Caching
 * Distribution

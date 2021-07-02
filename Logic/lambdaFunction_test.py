@@ -11,7 +11,8 @@ class TestLambdaFunction(unittest.TestCase):
         Check the expected values for known countries and cities
         """
         request = {
-            'body': '{\r\n    "Country":"South Africa",\r\n    "UserTimeZone": 120\r\n}'
+            "Country" : "South Africa",
+            "UserTimeZone" : 120
         }
         result = main(request,'')
         result = json.loads(result['body'])
@@ -23,7 +24,8 @@ class TestLambdaFunction(unittest.TestCase):
         self.assertEqual(result, expected)
 
         request = {
-            'body': '{\r\n    "City":"Johannesburg",\r\n    "UserTimeZone": 0\r\n}'
+            "City" : "Johannesburg",
+            "UserTimeZone" : 0
         }
         result = main(request,'')
         result = json.loads(result['body'])
@@ -41,14 +43,16 @@ class TestLambdaFunction(unittest.TestCase):
         """
         # Invalid Country
         request = {
-            'body': '{\r\n    "Country":"ABCDEF",\r\n    "UserTimeZone": 120\r\n}'
+            "Country" : "MORDOR",
+            "UserTimeZone" : 120
         }
         result = main(request,'')
         self.assertEqual(result['statusCode'], 404)
 
         # Invalid City
         request = {
-            'body': '{\r\n    "City":"ABCDEF",\r\n    "UserTimeZone": 0\r\n}'
+            "City" : "MORDOR",
+            "UserTimeZone" : 0
         }
         result = main(request,'')
         expected = {

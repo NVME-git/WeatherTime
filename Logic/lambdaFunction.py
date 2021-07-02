@@ -1,39 +1,37 @@
 from weatherMap import weatherMap
 from countryCapital import countryCapital
-from response import response
 import json
 
 def main(event, context):
+    print(event)
 
-    request = json.loads(event['body'])
-
-    if 'Country' in request.keys(): 
-        capital = countryCapital(request['Country'])
+    if 'Country' in event.keys(): 
+        capital = countryCapital(event['Country'])
         if capital['statusCode'] != 200:
-            body = {'reason': 'Country Not Found'}
-            return response(capital['statusCode'], body)
+            raise Exception('Country Not Found')
         # Generate city query with country code.
         city = f'''{capital['Capital']}, {capital['CountryCode']}'''
-    elif 'City' in request.keys():
-        city = request['City']
+    elif 'City' in event.keys():
+        city = event['City']
 
     weather = weatherMap(city)
     if weather['statusCode'] != 200:
-        body = {'reason':'City Not Found'}
-        return response(weather['statusCode'], body)
+        raise Exception('City Not Found')
     
+    # TODO UserTimeZone validation
     body = {
         'City': weather['City'],
         'CountryCode': weather['CountryCode'],
         'Temperature': weather['CurrentTemperature'],
-        'TimeDifference' : request['UserTimeZone'] - weather['CityTimeZone']}
+        'TimeDifference' : int(event['UserTimeZone']) - weather['CityTimeZone']}
 
-    return response(200, body)
+    return body
 
 
 if __name__ == '__main__':
     event = {
-        'body': '{\r\n    "Country":"South Africa",\r\n    "UserTimeZone": 120\r\n}'
+        "Country" : "South Africa",
+        "UserTimeZone" : 60
     }
     res = main(event,'context')
     print(json.dumps(res, indent=4, sort_keys=True))
