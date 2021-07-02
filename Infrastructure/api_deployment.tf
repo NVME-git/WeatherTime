@@ -3,6 +3,9 @@ resource "aws_api_gateway_deployment" "deploy" {
 
     triggers = {
         redeployment = sha1(jsonencode([
+        aws_api_gateway_resource.capital.id,
+        aws_api_gateway_method.get_capital.id,
+        aws_api_gateway_integration.capital_integration.id,
         aws_api_gateway_resource.city.id,
         aws_api_gateway_method.get_city.id,
         aws_api_gateway_integration.city_integration.id,
@@ -18,7 +21,7 @@ resource "aws_api_gateway_stage" "stage" {
     deployment_id = aws_api_gateway_deployment.deploy.id
     rest_api_id   = aws_api_gateway_rest_api.apigw.id
     stage_name    = "accenture"
-    cache_cluster_enabled = true
+    cache_cluster_enabled = false
     cache_cluster_size = 0.5
 }
 
