@@ -15,7 +15,6 @@ class TestLambdaFunction(unittest.TestCase):
             "UserTimeZone" : 120
         }
         result = main(request,'')
-        result = json.loads(result['body'])
         result.pop('Temperature', None)
         expected = {
             'City':'Pretoria',
@@ -28,12 +27,11 @@ class TestLambdaFunction(unittest.TestCase):
             "UserTimeZone" : 0
         }
         result = main(request,'')
-        result = json.loads(result['body'])
         result.pop('Temperature', None)
         expected = {
             'City':'Johannesburg',
             'CountryCode':'ZA',
-            'TimeDifference':-120
+            'TimeDifference':-2
             }
         self.assertEqual(result, expected)
 
@@ -42,24 +40,20 @@ class TestLambdaFunction(unittest.TestCase):
         Check that unexpected requests get rejected successfully.
         """
         # Invalid Country
-        request = {
-            "Country" : "MORDOR",
-            "UserTimeZone" : 120
-        }
-        result = main(request,'')
-        self.assertEqual(result['statusCode'], 404)
+        with self.assertRaises(Exception):
+            request = {
+                "Country" : "MORDOR",
+                "UserTimeZone" : 120
+            }
+            main(request,'')
 
         # Invalid City
-        request = {
-            "City" : "MORDOR",
-            "UserTimeZone" : 0
-        }
-        result = main(request,'')
-        expected = {
-            'statusCode':404,
-            'reason':'Not Found'
-        }
-        self.assertEqual(result['statusCode'], 404)
+        with self.assertRaises(Exception):
+            request = {
+                "City" : "MORDOR",
+                "UserTimeZone" : 0
+            }
+            main(request,'')
 
 
 if __name__ == '__main__':

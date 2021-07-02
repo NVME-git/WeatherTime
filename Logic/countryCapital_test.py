@@ -12,24 +12,18 @@ class TestCountryCapital(unittest.TestCase):
         """
         result = countryCapital('South Africa')
         expected = {
-            'statusCode':200,
-            'reason': 'OK',
             'Capital':'Pretoria',
             'CountryCode':'ZA'}
         self.assertEqual(result, expected)
 
         result = countryCapital('Ireland')
         expected = {
-            'statusCode':200,
-            'reason': 'OK',
             'Capital':'Dublin',
             'CountryCode':'IE'}
         self.assertEqual(result, expected)
 
         result = countryCapital('United States')
         expected = {
-            'statusCode':200,
-            'reason': 'OK',
             'Capital':'Washington, D.C.',
             'CountryCode':'US'}
         self.assertEqual(result, expected)
@@ -38,12 +32,8 @@ class TestCountryCapital(unittest.TestCase):
         """
         Check that unexpected requests get rejected successfully.
         """
-        result = countryCapital('ABCDEF')
-        expected = {
-            'statusCode':404,
-            'reason':'Not Found'
-        }
-        self.assertEqual(result, expected)
+        with self.assertRaises(Exception):
+            countryCapital('MORDOR')
 
 
 if __name__ == '__main__':

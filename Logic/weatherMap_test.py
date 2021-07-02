@@ -12,8 +12,6 @@ class TestWeatherMap(unittest.TestCase):
         result = weatherMap('Johannesburg')
         result.pop('CurrentTemperature', None)
         expected = {
-            'statusCode':200,
-            'reason': 'OK',
             'City':'Johannesburg',
             'CountryCode':'ZA',
             'CityTimeZone':120}
@@ -22,8 +20,6 @@ class TestWeatherMap(unittest.TestCase):
         result = weatherMap('Dublin')
         result.pop('CurrentTemperature', None)
         expected = {
-            'statusCode':200,
-            'reason': 'OK',
             'City':'Dublin',
             'CountryCode':'US',
             'CityTimeZone':-420}
@@ -32,8 +28,6 @@ class TestWeatherMap(unittest.TestCase):
         result = weatherMap('Dublin,IE')
         result.pop('CurrentTemperature', None)
         expected = {
-            'statusCode':200,
-            'reason': 'OK',
             'City':'Dublin',
             'CountryCode':'IE',
             'CityTimeZone':60}
@@ -43,11 +37,8 @@ class TestWeatherMap(unittest.TestCase):
         """
         Check that unexpected requests get rejected successfully.
         """
-        result = weatherMap('Mordor')
-        expected = {
-            'statusCode':404,
-            'reason': 'Not Found'}
-        self.assertEqual(result, expected)
+        with self.assertRaises(Exception):
+            weatherMap('Mordor')
 
 
 if __name__ == '__main__':

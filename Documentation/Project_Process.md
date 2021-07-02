@@ -18,7 +18,8 @@ The problem will be broken down into three parts:
     * [OpenWeatherMap](https://openweathermap.org/current#current_JSON) is used to obtain the current data for each city.
     * [API reference documentation](Open_Weather_Map.md) containing response parameters.
     * The timezone calculations show a shift in seconds from UTC time.
-        * Cities east of the GMT line have 
+        * Timezone calculations should ideally return a time difference in hours.
+        * Therefore the UserTimeZone (which is provided in minutes) must also be converted to hours WRT UTC GMT.
 1. Time Delta function: Get time difference between the timezone of the person calling the API and the city they search for.
 
 ## Performance aspects that are considered

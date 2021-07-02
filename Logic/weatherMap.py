@@ -8,16 +8,17 @@ def weatherMap(cityName, units='standard'):
     
     PARAMS = {'q':cityName, 'APPID':APPID, 'units':units}
     response = requests.get(url = URL, params = PARAMS)
-    payload = {
-        'statusCode': response.status_code,
-        'reason': response.reason}
 
-    if response.status_code == 200:
-        data = response.json()
-        payload['CountryCode'] = data['sys']['country']
-        payload['City'] = data['name']
-        payload['CityTimeZone'] = int(data['timezone']/60) 
-        payload['CurrentTemperature'] = data['main']['temp']
+    if response.status_code != 200: raise Exception('Invalid City')
+        
+    data = response.json()
+
+    return {
+        'CountryCode' : data['sys']['country'],
+        'City' : data['name'],
+        'CityTimeZone' : int(data['timezone']/60),
+        'CurrentTemperature' : data['main']['temp']
+    }
     
     return payload
 

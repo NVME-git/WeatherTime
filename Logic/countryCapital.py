@@ -11,16 +11,15 @@ def countryCapital(countryName):
     
     response = requests.get(url = URL)
 
-    payload = {
-        'statusCode': response.status_code}
+    if response.status_code != 200: raise Exception('Invalid Country')
 
-    if response.status_code == 200:
-        payload['reason'] = 'OK'
-        payload['Capital'], payload['CountryCode'] = firstValidValue(response)
-    else:
-        payload['reason'] = 'Not Found'
+    Capital, CountryCode = firstValidValue(response)
 
-    return payload
+    return {
+        'Capital':Capital,
+        'CountryCode': CountryCode}
+
+
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
