@@ -12,8 +12,12 @@ def main(event, context):
         city = f'''{capital['Capital']}, {capital['CountryCode']}'''
     elif 'City' in event.keys():
         city = event['City']
+    else:
+        raise Exception('Invalid request parameters')
 
-    weather = weatherMap(city)
+    units = event['Units']
+
+    weather = weatherMap(city, units)
     
     UserTimeZone = timeZone(event['UserTimeZone'])
 
@@ -26,8 +30,9 @@ def main(event, context):
 
 if __name__ == '__main__':
     event = {
-        "Country" : "South Africa",
-        "UserTimeZone" : 6000
+        'Country' : 'South Africa',
+        'UserTimeZone' : 60,
+        'Units' : 'metric'
     }
     res = main(event,'context')
     print(json.dumps(res, indent=4, sort_keys=True))
