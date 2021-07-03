@@ -5,7 +5,7 @@ def timeZone(UserTimeZone):
     except:
         raise Exception('Invalid UserTimeZone')
 
-    if UserTimeZone not in range(-11,15): 
+    if UserTimeZone not in range(-11,14+1): 
         raise Exception('Invalid UserTimeZone')
     
     return UserTimeZone

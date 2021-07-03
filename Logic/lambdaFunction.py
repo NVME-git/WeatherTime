@@ -25,7 +25,7 @@ def main(event, context):
         'City': weather['City'],
         'CountryCode': weather['CountryCode'],
         'Temperature': weather['CurrentTemperature'],
-        'TimeDifference' : int(UserTimeZone - weather['CityTimeZone']/60)}
+        'TimeDifference' : int(UserTimeZone - weather['CityTimeZone'])}
     
     print(response)
 

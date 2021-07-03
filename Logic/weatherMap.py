@@ -18,13 +18,12 @@ def weatherMap(cityName, units):
     return {
         'CountryCode' : data['sys']['country'],
         'City' : data['name'],
-        'CityTimeZone' : int(data['timezone']/60),
+        'CityTimeZone' : int(data['timezone']/3600),
         'CurrentTemperature' : data['main']['temp']
     }
     
-    return payload
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
-        response = weatherMap(sys.argv[1])
+        response = weatherMap(sys.argv[1],'metric')
         print(json.dumps(response, indent=4, sort_keys=True))
