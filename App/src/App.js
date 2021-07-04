@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-const api = {
-  backup_key: "pjWDvOxlkM9FH0uShvvzA4kKRYb3atpA7YTgVqhf",
-  backup_base: "https://sy84tq5dk1.execute-api.eu-west-1.amazonaws.com/default",
-  base: "https://wmp9r4vkbd.execute-api.eu-west-1.amazonaws.com/accenture",
-  key: "7SCBoKNW9S2zUIL6yXwKM7qauHiou2mo83ul9US9"
-}
+const api = require('./config.json')
 
 function App() {
   const [query, setQuery] = useState('');
@@ -29,11 +24,11 @@ function App() {
     let d = new Date();
     let user_tz = -1*d.getTimezoneOffset();
     console.log(query, user_tz, 'metric');
-    let uri = `${api.base}/${endpoint.name}weather?${endpoint.param}=${query}&UserTimeZone=${user_tz}&Units=metric`;
+    let uri = `${api.backup.base}/${endpoint.name}weather?${endpoint.param}=${query}&UserTimeZone=${user_tz}&Units=metric`;
     let request_headers= new Headers();
     request_headers.append('Content-Type','application/json');
     request_headers.append('Accept','application/json');
-    request_headers.append('x-api-key',api.key);
+    request_headers.append('x-api-key',api.backup.key);
     request_headers.append('Host','http//192.168.91.241:3000');
     let request = new Request(uri, {
       method: 'GET',
